@@ -9,15 +9,13 @@ export const test = base.extend<{ worker: void }>({
        server.listen({ onUnhandledRequest: 'bypass' });
     }
 
-    try {
-      await use();
-    } finally {
-      if (isMock) {
+    await use();
+
+    if (isMock) {
         server.resetHandlers();
         server.close();
-      }
     }
-  }, { auto: true, scope: 'worker' }], // Automatically run for every test
+  }, { auto: true }], // Automatically run for every test
 });
 
 export { expect } from '@playwright/test';

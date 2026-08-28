@@ -1,7 +1,9 @@
 import type {
   Reporter,
   TestCase,
-  TestResult
+  TestResult,
+  FullConfig,
+  Suite
 } from '@playwright/test/reporter';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
@@ -11,8 +13,28 @@ import * as path from 'path';
 dotenv.config();
 
 class JiraReporter implements Reporter {
+  private mswServer: any = null;
+
+  async onBegin(config: FullConfig, suite: Suite) {
+    if (process.env.MOCK_API === 'true') {
+      const msw = await import('./msw/server');
+      this.mswServer = msw.server;
+      if (this.mswServer) {
+          this.mswServer.listen({ onUnhandledRequest: 'bypass' });
+      }
+    }
+  }
+
+  async onEnd() {
+    if (this.mswServer) {
+      this.mswServer.resetHandlers();
+      this.mswServer.close();
+    }
+  }
+
   async onTestEnd(test: TestCase, result: TestResult) {
-    if (result.status === 'failed' || result.status === 'timedOut') {
+    // Only log on the final retry attempt to prevent duplicate Jira tickets
+    if ((result.status === 'failed' || result.status === 'timedOut') && result.retry === test.retries) {
       const isMockApi = process.env.MOCK_API === 'true';
       const jiraUrl = isMockApi ? 'https://mock-jira.atlassian.net' : (process.env.JIRA_URL || '');
       const jiraToken = process.env.JIRA_TOKEN;
