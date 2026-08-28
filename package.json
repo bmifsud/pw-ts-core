@@ -42,7 +42,6 @@
     "eslint-plugin-import": "^2.32.0",
     "exceljs": "^3.4.0",
     "lighthouse": "^13.4.1",
-    "ortoni-report": "^2.0.7",
     "pdfjs-dist-es5": "^2.13.216",
     "pg": "^8.21.0",
     "typescript": "^6.0.3",
