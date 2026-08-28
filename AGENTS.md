@@ -1,0 +1,1 @@
+This repository is a Playwright QA automation framework prototype. Strict adherence to TypeScript best practices, clean code, Mock Service Worker (MSW) for API interception, and distinct npm script separations for CI/CD test plans is required. Never hallucinate locators.
