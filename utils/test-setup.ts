@@ -9,11 +9,13 @@ export const test = base.extend<{ worker: void }>({
        server.listen({ onUnhandledRequest: 'bypass' });
     }
 
-    await use();
-
-    if (isMock) {
+    try {
+      await use();
+    } finally {
+      if (isMock) {
         server.resetHandlers();
         server.close();
+      }
     }
   }, { auto: true }], // Automatically run for every test
 });
