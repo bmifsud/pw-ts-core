@@ -40,12 +40,13 @@
     "crypto-js": "^4.2.0",
     "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.32.0",
-    "exceljs": "^4.4.0",
-    "lighthouse": "^9.6.8",
-    "ortoni-report": "^4.0.8",
+    "exceljs": "^3.4.0",
+    "lighthouse": "^13.4.1",
+    "ortoni-report": "^2.0.7",
     "pdfjs-dist-es5": "^2.13.216",
     "pg": "^8.21.0",
     "typescript": "^6.0.3",
+    "uuid": "^14.0.2",
     "winston": "^3.19.0"
   },
   "devDependencies": {
