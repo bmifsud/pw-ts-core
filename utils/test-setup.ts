@@ -17,7 +17,7 @@ export const test = base.extend<{ worker: void }>({
         server.close();
       }
     }
-  }, { auto: true }], // Automatically run for every test
+  }, { auto: true, scope: 'worker' }], // Automatically run for every test
 });
 
 export { expect } from '@playwright/test';
